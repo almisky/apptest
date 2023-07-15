@@ -32,7 +32,7 @@ Route::prefix('auth')->group(function () {
 // Route::prefix('user')->group(function () {
 Route::get('profile', 'UserController@profile')->name('profile');
 Route::get('profile-settings', 'UserController@profileSettings')->name('profilesettings');
-Route::post('save-profile-settings', 'UserController@saveProfileSettings')->name('saveprofilesettings');
+Route::post('saveprofilesettings', 'UserController@saveProfileSettings')->name('actionsaveprofile');
 // });
 // Route::prefix('dashboard')->group(function () {
 //     Route::post('/', 'OrdersController@do')->name('dashboarduser');

@@ -51,4 +51,12 @@ class User extends Authenticatable
 
         //$data = DB::table('tga')->insert($data_tga);
     }
+
+    public function update_user($username, $data)
+    {
+        $tabel_users = DB::table('users')
+            ->where('username', $username)
+            ->update($data);
+        return [$tabel_users];
+    }
 }

@@ -25,7 +25,11 @@ class UserController extends BaseController
 
     public function profile(Request $request)
     {
-        return view('profile');
+        $user_model = new User();
+        $user_id = session('user_id');
+        $datas =  $user_model->get_user($user_id);
+
+        return view('profile', ['datas' => $datas]);
     }
 
     public function profilesettings(Request $request)
@@ -41,5 +45,24 @@ class UserController extends BaseController
         $username = $request->input('username');
         $name = $request->input('name');
         $email = $request->input('email');
+
+        $data = array(
+            'nama' => $name,
+            'email' => $email,
+        );
+
+        $user_model = new User();
+
+        $update =  $user_model->update_user($username, $data);
+
+        if ($update) {
+            $status = true;
+            Session::flash('success', 'Profile berhasil diedit!');
+        } else {
+            $status = false;
+            Session::flash('error', 'Profile gagal diedit!');
+        }
+
+        return redirect(route('profile'));
     }
 }
