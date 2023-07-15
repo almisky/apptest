@@ -17,11 +17,25 @@
     <div class="row layout-top-spacing">
 
         <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+            
             <div class="widget-content widget-content-area br-6">
+                @if(session('error'))
+                <div class="alert alert-danger">
+                    {{session('error')}}
+                </div>
+                @endif
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{session('success')}}
+                </div>
+                @endif
+                <h6 class="">Product List</h6>
+                <?php if(session('role')==1) :?>
                 <a href="{{ route('addproductspage') }}">
                     <button type="button" class="btn btn-warning mb-2 mr-2 btn-rounded" style="float: right">Add Products
                     </button>
                 </a>
+                <?php endif ?>
                 <div class="table-responsive mb-4 mt-4">
                     <table id="zero-config" class="table table-hover" style="width:100%">
                         <thead>
@@ -37,18 +51,21 @@
                         <tbody>
                             @foreach ($product as $data)
                             <tr>
-                                <td class="text-center">{{$nomor++}}</td>
-                                <td class="text-center">{{ $data->id }}</td>
-                                <td class="text-center">{{ $data->products_name }}</td>
-                                <td class="text-center">{{ $data->cc }} CC</td>
+                                <td>{{$nomor++}}</td>
+                                <td>{{ $data->id }}</td>
+                                <td>{{ $data->products_name }}</td>
+                                <td>{{ $data->cc }} CC</td>
+                                <?php if(session('role')==1) :?>
                                 <td>
-                                    <button type="button" class="btn btn-danger mb-2 mr-2 rounded-circle" >
+                                    <a href="{{ route('editproductspage', $data->id) }}">
+                                    <button type="button" class="btn btn-warning mb-2 mr-2 rounded-circle" >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2">
                                             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                                         </svg>
                                     </button>
-                                
+                                    </a>
+                                    <a href="{{ route('deleteproducts', $data->id) }}">
                                     <button type="button" class="btn btn-danger mb-2 mr-2 rounded-circle">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -59,7 +76,22 @@
                                             <line x1="14" y1="11" x2="14" y2="17"></line>
                                         </svg>
                                     </button>
+                                    </a>
                                 </td>
+                                <?php elseif(session('role')==2) :?>
+                                <td>
+                                    <a href="{{ route('actionbuyproduct', $data->id) }}">
+                                        <button type="button" class="btn btn-success mb-2 mr-2 rounded-circle">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
+                                                <circle cx="9" cy="21" r="1"></circle>
+                                                <circle cx="20" cy="21" r="1"></circle>
+                                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                </td>
+                                <?php endif ?>
                             </tr>
                             @endforeach
                         </tbody>

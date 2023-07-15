@@ -24,4 +24,84 @@ class ProductsController extends BaseController
 
         return view('product_list', ['product' => $datas, 'nomor' => $nomor]);
     }
+
+    public function addProductsPage(Request $request)
+    {
+        return view('add_products');
+    }
+
+    function addProducts(Request $request)
+    {
+        $username = $request->input('username');
+        $name = $request->input('name');
+        $cc = $request->input('cc');
+
+        $data = array(
+            'products_name' => $name,
+            'cc' => $cc,
+            'user_input' => $username,
+        );
+
+        $products_model = new Products();
+
+        $insert =  $products_model->insert_products($data);
+
+        if ($insert) {
+            $status = true;
+            Session::flash('success', 'Product berhasil ditambah!');
+        } else {
+            $status = false;
+            Session::flash('error', 'Product gagal ditambah!');
+        }
+
+        return redirect(route('productslist'));
+    }
+
+    public function editProductsPage($id_product)
+    {
+        $products_model = new Products();
+        $datas =  $products_model->get_product($id_product);
+        return view('edit_products', ['datas' => $datas]);
+    }
+
+    function editProducts(Request $request)
+    {
+        $id_products = $request->input('id_products');
+        $name = $request->input('name');
+        $cc = $request->input('cc');
+
+        $data = array(
+            'products_name' => $name,
+            'cc' => $cc,
+        );
+
+        $products_model = new Products();
+
+        $update =  $products_model->update_products($id_products, $data);
+
+        if ($update) {
+            $status = true;
+            Session::flash('success', 'Product berhasil diedit!');
+        } else {
+            $status = false;
+            Session::flash('error', 'Product gagal diedit!');
+        }
+
+        return redirect(route('productslist'));
+    }
+
+    public function deleteProducts($id_product)
+    {
+        $products_model = new Products();
+        $delete =  $products_model->delete_product($id_product);
+
+        if ($delete) {
+            $status = true;
+            Session::flash('success', 'Product berhasil dihapus!');
+        } else {
+            $status = false;
+            Session::flash('error', 'Product gagal dihapus!');
+        }
+        return redirect(route('productslist'));
+    }
 }

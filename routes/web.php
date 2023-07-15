@@ -38,7 +38,15 @@ Route::post('saveprofilesettings', 'UserController@saveProfileSettings')->name('
 Route::prefix('products')->group(function () {
     Route::get('index', 'ProductsController@index')->name('productslist');
     Route::get('add-products-page', 'ProductsController@addProductsPage')->name('addproductspage');
+    Route::post('add-products', 'ProductsController@addProducts')->name('actionaddproducts');
+    Route::get('edit-products-page/{id}', 'ProductsController@editProductsPage')->name('editproductspage');
+    Route::post('edit-products', 'ProductsController@editProducts')->name('actioneditproducts');
+    Route::get('delete-products/{id}', 'ProductsController@deleteProducts')->name('deleteproducts');
 });
-// Route::prefix('dashboard')->group(function () {
-//     Route::post('/', 'OrdersController@do')->name('dashboarduser');
-// });
+
+Route::prefix('orders')->group(function () {
+    Route::get('order-list', 'OrdersController@orderList')->name('orderslist');
+    Route::get('my-order-list', 'OrdersController@myOrderList')->name('myorderslist');
+    Route::get('make-order-page', 'OrdersController@makeOrderPage')->name('makeorderpage');
+    Route::get('make-order/{id}', 'OrdersController@makeOrder')->name('actionbuyproduct');
+});
