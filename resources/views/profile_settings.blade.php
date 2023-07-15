@@ -3,7 +3,7 @@
 <link href="{{asset('assets/css/users/user-profile.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/css/users/account-setting.css')}}" rel="stylesheet" type="text/css" />
 @endsection
-@section('page-title') Profile Settings @endsection
+@section('page-title') Profile @endsection
 @section('breadcrumbs')
 <li class="breadcrumb-item"><a href="javascript:void(0);">
         <?= session('role') == 1 ? 'Admin' : 'User'?>

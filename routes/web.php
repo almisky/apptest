@@ -34,6 +34,11 @@ Route::get('profile', 'UserController@profile')->name('profile');
 Route::get('profile-settings', 'UserController@profileSettings')->name('profilesettings');
 Route::post('saveprofilesettings', 'UserController@saveProfileSettings')->name('actionsaveprofile');
 // });
+
+Route::prefix('products')->group(function () {
+    Route::get('index', 'ProductsController@index')->name('productslist');
+    Route::get('add-products-page', 'ProductsController@addProductsPage')->name('addproductspage');
+});
 // Route::prefix('dashboard')->group(function () {
 //     Route::post('/', 'OrdersController@do')->name('dashboarduser');
 // });
