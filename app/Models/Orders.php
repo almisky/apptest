@@ -91,25 +91,18 @@ class Orders extends Authenticatable
         return $insert;
     }
 
-    // public function get_product($id_product)
-    // {
-    //     $product = DB::table('products')->where('id', $id_product)->first();
+    public function cancel_order($id_order)
+    {
+        $tabel_orders = DB::table('orders')
+            ->where('id', $id_order)
+            ->update(['status' => 0]);
+        return [$tabel_orders];
+    }
 
-    //     return $product;
-    // }
+    public function delete_order($id_order)
+    {
+        $delete = DB::table('orders')->where('id', $id_order)->delete();
 
-    // public function update_products($id_products, $data)
-    // {
-    //     $tabel_products = DB::table('products')
-    //         ->where('id', $id_products)
-    //         ->update($data);
-    //     return [$tabel_products];
-    // }
-
-    // public function delete_product($id_product)
-    // {
-    //     $product = DB::table('products')->where('id', $id_product)->delete();
-
-    //     return $product;
-    // }
+        return $delete;
+    }
 }

@@ -30,19 +30,26 @@
 
             <ul class="navbar-item theme-brand flex-row  text-center">
                 <li class="nav-item theme-logo">
-                    <a href="index.html">
-                        <img src="{{asset('assets/img/90x90.jpg')}}" class="navbar-logo" alt="logo">
-                    </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="index.html" class="nav-link"> TEST </a>
+                    <a href="index.html" class="nav-link"> TEST APP</a>
                 </li>
             </ul>
             <ul class="navbar-item flex-row ml-md-auto">
                 <li class="nav-item dropdown user-profile-dropdown">
                     <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="userProfileDropdown"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <img src="{{asset('assets/img/90x90.jpg')}}" alt="avatar">
+                        <?php 
+                            $username = session('user_id');
+                            $path = 'assets/img';
+                            $full_path = 'assets/img/' . $username . '.jpg';
+
+                        ?>
+                        <?php if(File::exists($full_path)): ?>
+                            <img src="{{asset("assets/img/$datas->username.jpg")}}" style="width:25px;" alt="avatar">
+                        <?php else: ?>
+                            <img src="{{asset("assets/img/90x90.jpg")}}" alt="avatar">
+                        <?php endif ?>
                     </a>
                     <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                         <div class="">

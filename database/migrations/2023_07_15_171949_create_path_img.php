@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        // Schema::create('orders', function (Blueprint $table) {
-        //     $table->bigIncrements('id')->unique();
-        //     $table->string('products_id');
-        //     $table->string('id_user');
-        //     $table->string('status');
-        //     $table->timestamps();
-        // });
+        Schema::create('path_img', function (Blueprint $table) {
+            $table->string('username')->unique();
+            $table->string('path');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('path_img');
     }
 };

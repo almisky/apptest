@@ -21,7 +21,7 @@
                             data-offset="-100">
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12 layout-spacing">
-                                    <form id="general-info" action="{{ route('actionsaveprofile') }}" method="POST" class="section general-info">
+                                    <form id="general-info" action="{{ route('actionsaveprofile') }}" method="POST" class="section general-info" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" class="form-control mb-4" id="id_username" name="username" value="<?= session('user_id') ?>">
                                         <div class="info">
@@ -33,7 +33,8 @@
                                                             <div class="upload mt-4 pr-md-4">
                                                                 <input type="file" id="input-file-max-fs" class="dropify"
                                                                     data-default-file="assets/img/200x200.jpg"
-                                                                    data-max-file-size="2M" />
+                                                                    data-default-file="{{asset('assets/img/<?= $datas->username ?>')}}"
+                                                                    data-max-file-size="2M" name="profile_img"/>
                                                                 <p class="mt-2"><i class="flaticon-cloud-upload mr-1"></i>
                                                                     Upload
                                                                     Picture</p>

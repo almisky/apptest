@@ -49,4 +49,6 @@ Route::prefix('orders')->group(function () {
     Route::get('my-order-list', 'OrdersController@myOrderList')->name('myorderslist');
     Route::get('make-order-page', 'OrdersController@makeOrderPage')->name('makeorderpage');
     Route::get('make-order/{id}', 'OrdersController@makeOrder')->name('actionbuyproduct');
+    Route::get('cancel-order/{id}', 'OrdersController@cancelOrder')->name('cancelorder');
+    Route::get('delete-order/{id}', 'OrdersController@deleteOrder')->name('deleteorder');
 });

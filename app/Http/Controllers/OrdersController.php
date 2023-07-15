@@ -90,4 +90,34 @@ class OrdersController extends BaseController
 
         return redirect(route('makeorderpage'));
     }
+
+    public function cancelOrder($id_order)
+    {
+        $orders_model = new Orders();
+        $cancel =  $orders_model->cancel_order($id_order);
+
+        if ($cancel) {
+            $status = true;
+            Session::flash('success', 'Order berhasil dibatalkan!');
+        } else {
+            $status = false;
+            Session::flash('error', 'Order gagal dibatalkan!');
+        }
+        return redirect(route('myorderslist'));
+    }
+
+    public function deleteOrder($id_order)
+    {
+        $orders_model = new Orders();
+        $delete =  $orders_model->delete_order($id_order);
+
+        if ($delete) {
+            $status = true;
+            Session::flash('success', 'Order berhasil dihapus!');
+        } else {
+            $status = false;
+            Session::flash('error', 'Order gagal dihapus!');
+        }
+        return redirect(route('myorderslist'));
+    }
 }

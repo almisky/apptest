@@ -37,7 +37,12 @@
                                         </svg></a>
                                 </div>
                                 <div class="text-center user-info">
-                                    <img src="assets/img/90x90.jpg" alt="avatar">
+                                    
+                                    <?php if (File::exists($full_path)) : ?>
+                                        <img src="{{asset("assets/img/$datas->username.jpg")}}" style="height:150px;" alt="avatar">
+                                    <?php else: ?>
+                                        <img src="{{asset("assets/img/90x90.jpg")}}" alt="avatar">
+                                    <?php endif ?>
                                     <p class=""><?= $datas->nama ?></p>
                                 </div>
                                 <div class="user-info-list">
