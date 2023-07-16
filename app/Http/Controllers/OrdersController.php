@@ -12,6 +12,14 @@ use App\Models\Products;
 use Illuminate\Contracts\Session\Session as SessionSession;
 use Illuminate\Support\Facades\Hash;
 use Session;
+use App\Exports\OrdersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+use Dompdf\Dompdf;
+use Dompdf\FontMetrics;
+use Dompdf\Options;
 
 class OrdersController extends BaseController
 {
@@ -119,5 +127,50 @@ class OrdersController extends BaseController
             Session::flash('error', 'Order gagal dihapus!');
         }
         return redirect(route('myorderslist'));
+    }
+
+    public function exportOrdersUser()
+    {
+        // $user_id = session('user_id');
+        // return Excel::download(new OrdersExport, "$user_id orders.xlsx");
+
+        $orders_model = new Orders();
+
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+
+        $user_id = session('user_id');
+        $role = session('role');
+        $datas =  $orders_model->get_user_orders_list_full_data($user_id);
+
+        $activeWorksheet->setCellValue("A1", 'No.');
+        $activeWorksheet->setCellValue("B1", 'Order ID');
+        $activeWorksheet->setCellValue("C1", 'Products Name');
+        $activeWorksheet->setCellValue("D1", 'CC');
+        $activeWorksheet->setCellValue("E1", 'Status');
+
+
+        // echo '<pre>' . print_r($datas) . '</pre>';
+        // exit;
+
+        for ($i = 0; $i < sizeof($datas); $i++) {
+            $row = $i + 2;
+            $nomor = $i + 1;
+
+            $status = $datas[$i]->status == 1 ? 'Ordered' : 'Canceled';
+
+            $activeWorksheet->setCellValue("A$row", $nomor);
+            $activeWorksheet->setCellValue("B$row", $datas[$i]->id);
+            $activeWorksheet->setCellValue("C$row", $datas[$i]->products_name);
+            $activeWorksheet->setCellValue("D$row", $datas[$i]->products_cc);
+            $activeWorksheet->setCellValue("E$row", $status);
+        }
+
+        $fileName = "$user_id Orders.xlsx";
+
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        $writer->save('php://output');
     }
 }

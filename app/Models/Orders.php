@@ -77,6 +77,15 @@ class Orders extends Authenticatable
         return $order_list;
     }
 
+    public function get_user_orders_list_full_data($user_id)
+    {
+        $order_list = DB::select("SELECT *,
+                                (SELECT products_name from products where id=products_id) as products_name,
+                                (SELECT cc from products where id=products_id) as products_cc
+                                FROM `orders` WHERE id_user=?", [$user_id]);
+        return $order_list;
+    }
+
     public function get_products_list_for_user()
     {
         $product_list = DB::table('products')->get();

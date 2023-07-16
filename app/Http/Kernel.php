@@ -46,6 +46,9 @@ class Kernel extends HttpKernel
 
         'hakAkses' => [
             \App\Http\Middleware\HakAkses::class,
+        ],
+        'Guest' => [
+            \App\Http\Middleware\Guest::class,
         ]
     ];
 

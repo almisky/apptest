@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class HakAkses
+class Guest
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class HakAkses
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->session()->has('user_id')) {
-            return redirect('/auth/login-form');
+        if ($request->session()->has('user_id')) {
             // return  redirect('/');
             // exit('masuk');
+            return redirect('/');
         }
         return $next($request);
 

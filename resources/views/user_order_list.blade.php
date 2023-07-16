@@ -34,6 +34,10 @@
                     <button type="button" class="btn btn-warning mb-2 mr-2 btn-rounded" style="float: right">Buy Products
                     </button>
                 </a>
+                <a href="{{ route('exportexcelordersuser') }}">
+                    <button type="button" class="btn btn-dark mb-2 mr-2 btn-rounded" style="float: right">Export Data
+                    </button>
+                </a>
                 <div class="table-responsive mb-4 mt-4">
                     <table id="zero-config" class="table table-hover" style="width:100%">
                         <thead>
